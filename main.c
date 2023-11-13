@@ -18,7 +18,7 @@ int main(){
     INDEX tempIndice, promoKey;
     char concat[124];
 
-    printf("\tO programa foi inicializado...\n\tProcurando arquivo...\n");
+    printf("\tO programa foi iniciado...\n\tProcurando arquivos...\n");
 
     pontInsere = abreArquivo("insere.bin");
     fread(vetInsere, sizeof(REGISTRO), tamInsere, pontInsere);
@@ -28,15 +28,15 @@ int main(){
     fread(vetBusca, sizeof(BUSCA), tamBusca, pontBusca);
     fclose(pontBusca);
 
-    pontResult = abreArquivo("result.bin");
-    fseek(pontResult, 0, SEEK_END);
-
-    if (btopen())
-        root = getroot();
-    else
-        root = create_tree();
-
     do{
+        pontResult = abreArquivo("result.bin");
+        fseek(pontResult, 0, SEEK_END);
+
+        if (btopen())
+            root = getroot();
+        else
+            root = create_tree();
+
         printf("\n-------------------------------------------------------------------------\n\n");
         printf("\tDigite:\n\t1 - INSERCAO\n\t2 - IMPRIMIR TODOS\n\t3 - PESQUISA\n\t0 - ENCERRAR\n");
         printf("\tOpcao:");
@@ -58,8 +58,10 @@ int main(){
                 if (repetida)
                     break;
 
-                if (promovido)
+                if (promovido) {
                     root = create_root(promoKey, root, promo_rrn);
+                    printf("Chave promovida: %s", promoKey.key);
+                }
 
                 fwrite(&tempRegistro, sizeof(REGISTRO), 1, pontResult);
                 break;
@@ -92,15 +94,9 @@ FILE *abreArquivo(char *diretorio)
     int tam = 0;
 
     if (access(diretorio, F_OK) == 0)
-    {
         pont = fopen(diretorio, "r+b");
-        printf("\nArquivo encontrado.\n");
-    }
     else
-    {
         pont = fopen(diretorio, "w+b");
-        printf("\nArquivo criado.\n");
-    }
 
     return pont;
 }
