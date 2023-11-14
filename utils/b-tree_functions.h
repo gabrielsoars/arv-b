@@ -36,7 +36,7 @@ int insere(short rrn, INDEX chave, short * promoRrnFilho, INDEX * promoChave, in
     btread(rrn, &page);
     encontrado = search_node(chave, &page, &pos);
     if (encontrado){
-        printf("A chave já foi cadastrada: %s \n", chave.key);
+        printf("Chave duplicada: %s \n", chave.key);
         *repetida = 1;
         return NO;
     }
@@ -52,6 +52,7 @@ int insere(short rrn, INDEX chave, short * promoRrnFilho, INDEX * promoChave, in
     }
     else{
         split(chavePromovido, rrnPromovido, &page, promoChave, promoRrnFilho, &newPage);
+        printf("Divisão de nó\n");
         btwrite(rrn, &page);
         btwrite(*promoRrnFilho, &newPage);
         return YES;
@@ -79,7 +80,7 @@ void imprime(short rrn, FILE * pontResult){
     BTPAGE page;
     int pos;
 
-    if (rrn = NIL)
+    if (rrn == NIL)
         return ;
 
     btread(rrn, &page);

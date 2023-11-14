@@ -60,10 +60,11 @@ int main(){
 
                 if (promovido) {
                     root = create_root(promoKey, root, promo_rrn);
-                    printf("Chave promovida: %s", promoKey.key);
+                    printf("Chave promovida: %s\n", promoKey.key);
                 }
 
                 fwrite(&tempRegistro, sizeof(REGISTRO), 1, pontResult);
+                printf("Chave inserida com sucesso: %s\n", tempIndice.key);
                 break;
             case 2:
                 imprime(root, pontResult);
